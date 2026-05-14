@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파란수학 고등관 인원 현황</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A2342;--navy2:#1B4F8A;--blue:#2E86DE;--gold:#C9A84C;--gold-l:#F0D080;--bg:#EEF2F7;--card:#FFFFFF;--border:rgba(10,35,66,0.09);--muted:#6B7E96;--light:#A0B0C0;--r:12px;--r-s:7px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--navy);min-height:100vh;}
+.hd{background:var(--navy);border-bottom:2px solid var(--gold);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+.hd-l{display:flex;align-items:center;gap:12px;}
+.badge{background:var(--gold);color:var(--navy);font-weight:700;font-size:12px;padding:3px 9px;border-radius:4px;}
+.hd h1{color:#fff;font-size:16px;font-weight:500;}
+.hd-r{display:flex;align-items:center;gap:10px;}
+.sync{color:var(--gold-l);font-size:11px;font-family:'DM Mono',monospace;}
+.btn-save{background:transparent;border:1px solid rgba(201,168,76,0.5);color:var(--gold-l);font-size:12px;padding:4px 12px;border-radius:5px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.btn-save:hover{background:rgba(201,168,76,0.15);}
+.summary{background:var(--navy2);display:flex;gap:0;overflow-x:auto;padding:0 20px;}
+.si{padding:11px 24px;border-right:1px solid rgba(255,255,255,0.1);min-width:100px;}
+.si:last-child{border:none;}
+.si-label{font-size:10px;color:rgba(255,255,255,0.55);margin-bottom:3px;letter-spacing:.05em;}
+.si-val{font-size:20px;font-weight:700;color:#fff;font-family:'DM Mono',monospace;}
+.si-val span{font-size:11px;font-weight:400;color:var(--gold-l);margin-left:3px;}
+.tabs{background:var(--card);border-bottom:1px solid var(--border);padding:0 20px;display:flex;gap:0;}
+.tab{padding:9px 20px;font-size:13px;font-weight:500;background:none;border:none;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:'Noto Sans KR',sans-serif;transition:all .2s;}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;padding:16px 20px;}
+.tc{background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;}
+.tc-head{padding:12px 14px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.tc-name{font-size:15px;font-weight:700;color:var(--navy);}
+.tc-days{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;}
+.tc-total-num{font-size:22px;font-weight:700;font-family:'DM Mono',monospace;color:var(--navy);text-align:right;}
+.tc-total-label{font-size:10px;color:var(--muted);text-align:right;}
+.slots{padding:10px 14px;display:flex;flex-direction:column;gap:7px;}
+.slot{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r-s);background:var(--bg);cursor:pointer;transition:background .15s;border:1px solid transparent;}
+.slot:hover{background:#E4EBF5;border-color:var(--border);}
+.slot.open{background:#EAF1FB;border-color:rgba(46,134,222,0.2);}
+.slot-part{font-size:11px;font-weight:500;color:var(--muted);width:72px;flex-shrink:0;line-height:1.3;}
+.gtag{font-size:10px;font-weight:500;padding:2px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;}
+.g1{background:#E3EEFF;color:#1B4F8A;}
+.g2{background:#E3F5EC;color:#1A7F4B;}
+.g3{background:#FFF0E0;color:#B7600E;}
+.ga{background:#F0ECFF;color:#5B45A8;}
+.slot-bar{flex:1;height:7px;background:rgba(10,35,66,0.08);border-radius:4px;overflow:hidden;}
+.slot-fill{height:100%;border-radius:4px;transition:width .3s;}
+.fill-full{background:#E24B4A;}
+.fill-near{background:#EF9F27;}
+.fill-ok{background:#1D9E75;}
+.fill-na{background:#9BAAB8;}
+.slot-nums{font-size:12px;font-weight:500;font-family:'DM Mono',monospace;color:var(--navy);white-space:nowrap;min-width:48px;text-align:right;}
+.slot-badge{font-size:10px;font-weight:500;padding:2px 6px;border-radius:10px;white-space:nowrap;min-width:44px;text-align:center;}
+.b-full{background:#FEE;color:#C0392B;}
+.b-near{background:#FFF5E0;color:#B7791F;}
+.b-ok{background:#E8F8F0;color:#1A7F4B;}
+.b-na{background:#F0EEF8;color:#6B5FA6;}
+.slot-arrow{font-size:10px;color:var(--light);transition:transform .2s;flex-shrink:0;}
+.slot.open .slot-arrow{transform:rotate(90deg);}
+.stu-panel{display:none;padding:8px 14px 12px;border-top:1px solid var(--border);background:#F7FAFF;}
+.stu-panel.open{display:block;}
+.stu-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
+.chip{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:3px 8px;font-size:11px;color:var(--navy);display:flex;align-items:center;gap:3px;}
+.chip-del{color:var(--light);cursor:pointer;font-size:13px;line-height:1;}
+.chip-del:hover{color:#E24B4A;}
+.stu-add{display:flex;gap:6px;margin-top:6px;}
+.stu-add input{flex:1;padding:5px 9px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:'Noto Sans KR',sans-serif;outline:none;background:var(--card);}
+.stu-add input:focus{border-color:var(--blue);}
+.stu-add button{padding:5px 12px;background:var(--blue);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-family:'Noto Sans KR',sans-serif;}
+.stu-label{font-size:11px;color:var(--muted);margin-bottom:5px;}
+.group-label{padding:14px 20px 2px;font-size:12px;font-weight:700;color:var(--navy2);letter-spacing:.05em;}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:9px 16px;border-radius:8px;font-size:12px;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;z-index:99;}
+.toast.show{opacity:1;transform:translateY(0);}
+.legend{display:flex;flex-wrap:wrap;gap:14px;padding:4px 20px 16px;}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
+.leg-dot{width:8px;height:8px;border-radius:2px;}
+@media(max-width:600px){.grid{grid-template-columns:1fr;padding:12px;}.si{padding:10px 14px;}}
+</style>
+</head>
+<body>
+<div class="hd">
+  <div class="hd-l"><div class="badge">파란수학</div><h1>고등관 인원 현황</h1></div>
+  <div class="hd-r"><span class="sync" id="syncTime"></span><button class="btn-save" onclick="saveData()">저장</button></div>
+</div>
+<div class="summary" id="summary"></div>
+<div class="tabs">
+  <button class="tab on" onclick="setTab('all',this)">전체</button>
+  <button class="tab" onclick="setTab('mwf',this)">월수금</button>
+  <button class="tab" onclick="setTab('tts',this)">화목토</button>
+  <button class="tab" onclick="setTab('wknd',this)">주말</button>
+</div>
+<div id="root"></div>
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>마감·임박</div>
+  <div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>+2~3명 가능</div>
+  <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>+4명 이상</div>
+  <div class="leg"><div class="leg-dot" style="background:#9BAAB8"></div>고3·개별</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const INIT={lastUpdated:new Date().toISOString(),teachers:[
+  {id:'pjh',name:'박지환T',days:'월·수·금 / 화·목·토 / 금·토',slots:[
+    {id:'pjh_m1',g:'mwf',part:'월수금 1부',grade:'고1',max:10,stu:['김유준(가좌고1)','최강(대진고1)','전하윤(대진고1)','최시현(주엽고1)','김수현(대진고1)','김민채(대진고1)']},
+    {id:'pjh_m2',g:'mwf',part:'월수금 2부',grade:'고1',max:10,stu:['김보민(정발고1)','이서진(저동고1)','고정완(대화고1)','노희수(백신고1)','강예나(백마고1)']},
+    {id:'pjh_t1',g:'tts',part:'화목토 1부',grade:'고1',max:7,stu:['김민균(대화고1)','도현우(주엽고1)','심소윤(대진고1)','선민서(대진고1)','김윤재(대진고1)','홍성웅(대진고1)']},
+    {id:'pjh_t2',g:'tts',part:'화목토 2부',grade:'고1',max:7,stu:['김지호(안곡고1)','조유찬(저동고1)','서진혁(안곡고1)','지아영(세원고1)','김제권(주엽고1)']},
+    {id:'pjh_w1',g:'wknd',part:'금토 R반',grade:'고1',max:10,stu:['이채원(운정고1)','김예린(운정고1)','김지민(운정고1)','남영진(운정고1)','김규린(운정고1)','이라윤(운정고1)','박미소(운정고1)']},
+  ]},
+  {id:'pjy',name:'박지윤T',days:'월·수·금 / 화·목·토',slots:[
+    {id:'pjy_m1',g:'mwf',part:'월수금 1부',grade:'고1',max:10,stu:['노수민(풍동고1)','윤승준(대진고1)','박시우(주엽고1)','박채원(주엽고1)','김세영(주엽고1)','이상헌(중산고1)','김재원(덕이고1)','김아영(안곡고1)']},
+    {id:'pjy_m2',g:'mwf',part:'월수금 2부',grade:'고1',max:8,stu:['김빛(대화고1)','신승훈(대화고1)','김가율(대화고1)','서진혁(대진고1)','유건영(대진고1)','주아린(대진고1)']},
+    {id:'pjy_t1',g:'tts',part:'화목토 1부',grade:'고1',max:10,stu:['전시온(동패고1)','단희주(백신고1)','편근영(백신고1)','박다솔(주엽고1)','남송하(가좌고1)','최유석(안곡고1)']},
+    {id:'pjy_t2',g:'tts',part:'화목토 2부',grade:'고1',max:7,stu:['이채린(가좌고1)','백시연(주엽고1)','최준우(주엽고1)','안세미(대진고1)','최정인(대진고1)','박규민(주엽고1)']},
+  ]},
+  {id:'phn',name:'박혜남T',days:'월·수·금 / 화·목·토',slots:[
+    {id:'phn_m1',g:'mwf',part:'월수금 1부',grade:'고1',max:8,stu:['강민서(대진고1)','최민준(대진고1)','최준희(대진고1)','한승훈(대진고1)','최민제(저동고1)','이현우(가좌고1)','안지원(일산동1)']},
+    {id:'phn_m2',g:'mwf',part:'월수금 2부',grade:'고1',max:8,stu:['정우제(정발고1)','노찬영(주엽고1)','이윤하(대진고1)','이윤형(세원고1)','서지후(대진고1)','권서우(대진고1)']},
+    {id:'phn_t1',g:'tts',part:'화목토 1부',grade:'고1',max:7,stu:['오찬율(세원고1)','최정원(대화고1)','오재원(주엽고1)','설예진(대진고1)','봉현우(대진고1)']},
+    {id:'phn_t2',g:'tts',part:'화목토 2부',grade:'고1',max:8,stu:['이윤신(주엽고1)','서준우(정발고1)','김유빈(대화고1)','전현준(저동고1)','유지호(일산동1)','박수현(일산동1)','강진원(주엽고1)']},
+    {id:'phn_g1',g:'tts',part:'고3 개별',grade:'고3',max:null,stu:['배서영(세원고1)']},
+  ]},
+  {id:'lhb',name:'이해빈T',days:'월·수·금 / 화·목·토',slots:[
+    {id:'lhb_m1',g:'mwf',part:'월수금 1부',grade:'고1',max:10,stu:['심규진(가좌고1)','한예린(대화고1)','이우현(안곡고1)','양시아(대진고1)','장로이(봉일천1)','이희성(대진고1)','이한결(주엽고1)']},
+    {id:'lhb_m2',g:'mwf',part:'월수금 2부',grade:'고2',max:12,stu:['지예혁(안곡고2)','한경민(대진고2)','김가율(주엽고2)','김민수(주엽고2)','김은(저동고2)','임강현(저동고2)','김하진(대화고2)','최소영(대진고2)','김경민(한빛고2)']},
+    {id:'lhb_t1',g:'tts',part:'화목토 1부',grade:'고2',max:12,stu:['김규린(대화고2)','이연서(주엽고2)','박지민(대진고2)','오유나(세원고2)','송예빈(대진고2)','최원빈(일산동2)','이지민(대화고2)']},
+    {id:'lhb_t2',g:'tts',part:'화목토 2부',grade:'고2',max:12,stu:['민지윤(중산고2)','장선우(가좌고2)','김도현(안곡고2)','박새준(대화고2)','박규리(대진고2)','정하윤(대진고2)']},
+  ]},
+  {id:'chj',name:'조희재T',days:'월·수·금 / 화·목·토',slots:[
+    {id:'chj_m1',g:'mwf',part:'월수금 1부',grade:'고2',max:12,stu:['윤주원(일산동2)','김보민(주엽고2)','김강후(가좌고2)','홍서빈(백신고2)','박준형(중산고2)','정지연(덕이고2)','김범석(중산고2)','김준엽(가좌고2)','신민지(일산동2)']},
+    {id:'chj_m2',g:'mwf',part:'월수금 2부',grade:'고1',max:10,stu:['심승우(주엽고1)','임규환(대진고1)','오태윤(대진고1)','옥승재(대진고1)','김지후(풍동고1)','안나윤(대진고1)','이동훈(주엽고1)']},
+    {id:'chj_t1',g:'tts',part:'화목토 1부',grade:'고2',max:12,stu:['이해인(대화고2)','박윤제(대화고2)','함소희(정발고2)','한윤결(세원고2)','김준영(백신고2)','이예건(대화고2)','이동윤(주엽고2)','황준혁(일산동2)']},
+    {id:'chj_t2',g:'tts',part:'화목토 2부',grade:'고2',max:12,stu:['최정우(저동고2)','백하나(저동고2)','황준하(저동고2)','이하경(안곡고2)','윤재영(안곡고2)','이성배(대진고2)','박건희(중산고2)']},
+  ]},
+  {id:'lyj',name:'이영주T',days:'수·금·일 / 화·목·토',slots:[
+    {id:'lyj_m1',g:'mwf',part:'수금 1부',grade:'고1',max:10,stu:['하지훈(백석고1)','정지호(동패고1)','이아인(대화고1)','홍석윤(대진고1)','박재원(대진고1)','송은찬(주엽고1)','김은찬(대진고1)','김별(대진고1)','이소율(대진고1)']},
+    {id:'lyj_m2',g:'mwf',part:'수금 2부',grade:'고2',max:10,stu:['조현수(대진고2)','이주학(대진고2)','안나연(대진고2)','김경수(대진고2)','이주성(대진고2)','김무겸(대진고2)','허나윤(백석고2)','김무경(대진고2)']},
+    {id:'lyj_t1',g:'tts',part:'화목 1부',grade:'고3',max:null,stu:['최대희(정발고3)','장지연(안곡고3)','장승연(안곡고3)','김민재(주엽고3)','김수아(대화고3)','권나영(대진고3)','최유성(대진고3)']},
+    {id:'lyj_t2',g:'tts',part:'화목 2부',grade:'고3',max:null,stu:['윤서하(대진고3)','임지후(세원고3)','이기혁(세원고3)','목지원(저동고3)','김동규(대화고3)','김은세(대진고3)','김태훈(정발고3)','장연희(대진고3)']},
+    {id:'lyj_t3',g:'tts',part:'토 1부',grade:'고3',max:null,stu:['목지원(저동고3)','김민재(주엽고3)','임지후(세원고3)','김동규(대화고3)','이기혁(세원고3)']},
+    {id:'lyj_t4',g:'tts',part:'토 2부',grade:'고3',max:null,stu:['최대희(정발고3)','장지연(안곡고3)','장승연(안곡고3)','윤서하(대진고3)','최유성(대진고3)','김은세(대진고3)','김태훈(정발고3)','권나영(대진고3)']},
+  ]},
+  {id:'ich',name:'인창현T',days:'월·수·금 / 화·목·토',slots:[
+    {id:'ich_m1',g:'mwf',part:'월수금 1부',grade:'고2',max:12,stu:['정세린(한수중3)','김유정(백신고2)','안서현(덕이고2)','김담인(가좌고2)','정유빈(가좌고2)','조가현(일산동2)','유가윤(일산동2)','허채원(일산동2)']},
+    {id:'ich_m2',g:'mwf',part:'월수금 2부',grade:'고2',max:7,stu:['최현민(대진고2)','김가은(저동고2)','박기열(대화고2)','송현우(대화고2)','채서윤(대화고2)','정하은(주엽고2)']},
+    {id:'ich_t1',g:'tts',part:'화목토 1부',grade:'고2',max:12,stu:['김하성(저현고2)','정예준(백신고2)','김민서(가좌고2)','한민재(가좌고2)','박서준(가좌고2)']},
+    {id:'ich_t2',g:'tts',part:'화목토 2부',grade:'고2',max:12,stu:['이윤아(대진고2)','김시후(가좌고2)','배준서(가좌고2)','박건영(대화고2)','전민승(세원고2)']},
+  ]},
+  {id:'nhs',name:'나홍수T',days:'월·수·금 / 화·목·토',slots:[
+    {id:'nhs_m1',g:'mwf',part:'월수금 1부',grade:'고3',max:null,stu:['최준혁(저동고3)','정민준(주엽고3)','박주은(주엽고3)','김수현(덕이고3)','김진예(동패고3)','이규한(대화고3)']},
+    {id:'nhs_m2',g:'mwf',part:'월금 2부',grade:'고1',max:7,stu:['차성연(저동고1)','이도윤(안곡고1)','서민기(대진고1)','이주안(대진고1)','이유주(대화고1)']},
+    {id:'nhs_t1',g:'tts',part:'화목토 1부',grade:'고3',max:null,stu:['김선국(가좌고3)','문태윤(가좌고3)','박지영(대화고3)','박준영(주엽고3)','전예서(저동고3)']},
+    {id:'nhs_t2',g:'tts',part:'화목토 2부',grade:'고3',max:null,stu:['박무현(저동고3)','양현지(덕이고3)','한유진(저동고3)','서재우(대화고3)','양희건(안곡고3)']},
+  ]},
+  {id:'jkm',name:'장경민T',days:'토·일 주말',slots:[
+    {id:'jkm_w1',g:'wknd',part:'P반(토·일)',grade:'고1',max:15,stu:['김민(운정고1)','노휘찬(운정고1)','서재영(운정고1)','서연우(운정고1)','이지윤(운정고1)','최용호(운정고1)','한이준(운정고1)','허유준(운정고1)','류가은(운정고1)','김아라(운정고1)','신현일(운정고1)','김민혁(운정고1)']},
+    {id:'jkm_w2',g:'wknd',part:'운정2 B반(토)',grade:'고2',max:15,stu:['김동준(운정고2)','김호준(운정고2)','안유주(운정고2)','엄주원(운정고2)','이지효(운정고2)','박범준(운정고2)','유지훈(운정고2)','김진율(운정고2)','박연정(운정고2)','한지호(운정고2)','정하윤(운정고2)','최연우(운정고2)']},
+    {id:'jkm_w3',g:'wknd',part:'운정2 B반(일)',grade:'고2',max:15,stu:['김동준(운정고2)','김호준(운정고2)','김준래(운정고2)','한지호(운정고2)','안유주(운정고2)','엄주원(운정고2)','황지상(운정고2)','박연정(운정고2)','신지호(운정고2)','유지훈(운정고2)','정하윤(운정고2)','최연우(운정고2)']},
+    {id:'jkm_w4',g:'wknd',part:'운정2 A반(토)',grade:'고2',max:15,stu:['김준래(운정고2)','신지호(운정고2)','김찬형(운정고2)','조영훈(운정고2)','황지상(운정고2)','전서윤(운정고2)','서원혁(운정고2)','강현구(운정고2)','김채윤(운정고2)']},
+    {id:'jkm_w5',g:'wknd',part:'운정2 A반(일)',grade:'고2',max:15,stu:['전서윤(운정고2)','서원혁(운정고2)','박범준(운정고2)','김진율(운정고2)','김찬형(운정고2)','강현구(운정고2)','이지효(운정고2)','조영훈(운정고2)','김채윤(운정고2)']},
+    {id:'jkm_w6',g:'wknd',part:'일 개별(고3)',grade:'고3',max:null,stu:['남궁승(고국고3)','백서윤(고국고3)','송연지(고국고3)','성은채(운정고3)','이예진(고국고3)']},
+  ]},
+  {id:'nje',name:'노지은T',days:'토·일 주말',slots:[
+    {id:'nje_w1',g:'wknd',part:'토 1부',grade:'개별',max:null,stu:['오주환(운정고3)','고경태(운정고3)','성지영(고국고3)','이채현(고국고2)']},
+    {id:'nje_w2',g:'wknd',part:'토 2부',grade:'개별',max:null,stu:['이준(고국고3)','이서현(고국고2)','신효민(고양외고1)','유승주(가좌고3)']},
+    {id:'nje_w3',g:'wknd',part:'토 3부',grade:'개별',max:null,stu:['이수인(고국고2)','김시온(동산고1)','이태희(고국고2)','하서윤(고양외고1)','우윤서(국제고1)']},
+    {id:'nje_w4',g:'wknd',part:'토 4부',grade:'개별',max:null,stu:['김가원(국제고1)','오승은(운정고3)']},
+    {id:'nje_w5',g:'wknd',part:'일 1부',grade:'개별',max:null,stu:['모예은(고양외고3)','오주환(운정고3)']},
+    {id:'nje_w6',g:'wknd',part:'일 2부',grade:'개별',max:null,stu:['이준(고국고3)','성지영(고국고3)','이서현(고국고2)','김가원(국제고1)','김시온(동산고1)']},
+    {id:'nje_w7',g:'wknd',part:'일 3부',grade:'개별',max:null,stu:['하서윤(고양외고1)','이태희(고국고2)','이채현(고국고2)']},
+  ]},
+]};
+
+let D=JSON.parse(JSON.stringify(INIT));
+let tab='all';
+let openSet=new Set();
+
+async function load(){
+  try{const r=await window.storage.get('paran_v5');if(r&&r.value)D=JSON.parse(r.value);}catch(e){}
+  render();
+}
+
+async function saveData(){
+  D.lastUpdated=new Date().toISOString();
+  try{await window.storage.set('paran_v5',JSON.stringify(D));toast('저장되었습니다');syncTime();}
+  catch(e){toast('저장 실패');}
+}
+
+function syncTime(){
+  const d=new Date(D.lastUpdated);
+  document.getElementById('syncTime').textContent=`저장: ${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+function bi(n,max){
+  if(!max)return{fc:'fill-na',bc:'b-na',bt:'개별'};
+  const r=max-n;
+  if(r<=0)return{fc:'fill-full',bc:'b-full',bt:'마감'};
+  if(r<=1)return{fc:'fill-full',bc:'b-full',bt:`+${r}명`};
+  if(r<=3)return{fc:'fill-near',bc:'b-near',bt:`+${r}명`};
+  return{fc:'fill-ok',bc:'b-ok',bt:`+${r}명`};
+}
+
+function slotHTML(s){
+  const n=s.stu.length;
+  const pct=s.max?Math.min(100,Math.round(n/s.max*100)):60;
+  const{fc,bc,bt}=bi(n,s.max);
+  const maxTxt=s.max?`/${s.max}`:'';
+  const gmap={고1:'g1',고2:'g2',고3:'g3',개별:'ga'};
+  const isOpen=openSet.has(s.id);
+  const chips=s.stu.map((st,i)=>`<div class="chip">${st}<span class="chip-del" onclick="event.stopPropagation();delStu('${s.id}',${i})">×</span></div>`).join('');
+  return`<div class="slot${isOpen?' open':''}" onclick="toggleSlot('${s.id}')">
+    <span class="slot-part">${s.part}</span>
+    <span class="gtag ${gmap[s.grade]||'ga'}">${s.grade}</span>
+    <div class="slot-bar"><div class="slot-fill ${fc}" style="width:${pct}%"></div></div>
+    <span class="slot-nums">${n}${maxTxt}</span>
+    <span class="slot-badge ${bc}">${bt}</span>
+    <span class="slot-arrow">▶</span>
+  </div>
+  <div class="stu-panel${isOpen?' open':''}" id="sp_${s.id}">
+    <div class="stu-label">${s.part} 학생 (${n}명)</div>
+    <div class="stu-chips">${chips}</div>
+    <div class="stu-add">
+      <input id="si_${s.id}" placeholder="이름(학교학년) 입력 후 Enter" onkeydown="if(event.key==='Enter')addStu('${s.id}')">
+      <button onclick="addStu('${s.id}')">추가</button>
+    </div>
+  </div>`;
+}
+
+function tcHTML(t,groups){
+  const slots=t.slots.filter(s=>groups.includes(s.g));
+  if(!slots.length)return'';
+  const total=slots.reduce((a,s)=>a+s.stu.length,0);
+  const maxTotal=slots.reduce((a,s)=>s.max?a+s.max:a,0);
+  return`<div class="tc">
+    <div class="tc-head">
+      <div><div class="tc-name">${t.name}</div><div class="tc-days">${t.days}</div></div>
+      <div><div class="tc-total-num">${total}<span style="font-size:13px;color:var(--muted);font-weight:400">명</span></div>
+      <div class="tc-total-label">${maxTotal?`최대 ${maxTotal}명`:'고3·개별'}</div></div>
+    </div>
+    <div class="slots">${slots.map(s=>slotHTML(s)).join('')}</div>
+  </div>`;
+}
+
+function render(){
+  syncTime();renderSummary();
+  const labels={mwf:'월수금반',tts:'화목토반',wknd:'주말반'};
+  let html='';
+  if(tab==='all'){
+    const cards=D.teachers.map(t=>tcHTML(t,['mwf','tts','wknd'])).filter(Boolean).join('');
+    html=`<div class="grid">${cards}</div>`;
+  }else{
+    const groups=tab==='mwf'?['mwf']:tab==='tts'?['tts']:['wknd'];
+    const cards=D.teachers.map(t=>tcHTML(t,groups)).filter(Boolean).join('');
+    html=`<div class="group-label">${labels[tab]}</div><div class="grid">${cards}</div>`;
+  }
+  document.getElementById('root').innerHTML=html;
+}
+
+function renderSummary(){
+  let add=0;
+  D.teachers.forEach(t=>t.slots.forEach(s=>{
+    if(s.max)add+=Math.max(0,s.max-s.stu.length);
+  }));
+  document.getElementById('summary').innerHTML=`
+    <div class="si"><div class="si-label">전체 수강 (5/12)</div><div class="si-val">276<span>명</span></div></div>
+    <div class="si"><div class="si-label">1학년</div><div class="si-val">122<span>명</span></div></div>
+    <div class="si"><div class="si-label">2학년</div><div class="si-val">54<span>명</span></div></div>
+    <div class="si"><div class="si-label">3학년</div><div class="si-val">47<span>명</span></div></div>
+    <div class="si"><div class="si-label">인창현·이해빈T</div><div class="si-val">53<span>명</span></div></div>
+    <div class="si"><div class="si-label">추가 가능</div><div class="si-val">${add}<span>명</span></div></div>`;
+}
+
+function setTab(t,el){
+  tab=t;document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));el.classList.add('on');render();
+}
+
+function toggleSlot(id){
+  if(openSet.has(id))openSet.delete(id);else openSet.add(id);
+  const slot=document.querySelector(`.slot[onclick="toggleSlot('${id}')"]`);
+  const panel=document.getElementById(`sp_${id}`);
+  if(slot)slot.classList.toggle('open',openSet.has(id));
+  if(panel)panel.classList.toggle('open',openSet.has(id));
+}
+
+function findSlot(id){for(const t of D.teachers){const s=t.slots.find(s=>s.id===id);if(s)return s;}}
+
+function delStu(slotId,idx){
+  const s=findSlot(slotId);if(!s)return;
+  s.stu.splice(idx,1);saveData();openSet.add(slotId);render();
+}
+
+function addStu(slotId){
+  const inp=document.getElementById(`si_${slotId}`);
+  if(!inp||!inp.value.trim())return;
+  const s=findSlot(slotId);if(!s)return;
+  s.stu.push(inp.value.trim());saveData();openSet.add(slotId);render();
+  setTimeout(()=>{const i=document.getElementById(`si_${slotId}`);if(i)i.focus();},50);
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+load();
+</script>
+</body>
+</html>
