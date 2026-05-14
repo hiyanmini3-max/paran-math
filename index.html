@@ -3,704 +3,398 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>index.html</title>
+<title>파란수학 고등관 인원 현황</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --blue-deep: #0A2342;
-  --blue-mid: #1B4F8A;
-  --blue-bright: #2E86DE;
+  --navy: #0A2342;
+  --navy2: #1B4F8A;
+  --blue: #2E86DE;
   --gold: #C9A84C;
-  --gold-light: #F0D080;
-  --bg: #F4F6F9;
-  --surface: #FFFFFF;
-  --surface2: #F0F4FA;
-  --text: #0A2342;
-  --text-muted: #5A6B82;
-  --text-light: #9BAAB8;
-  --border: rgba(10,35,66,0.10);
-  --red-bg: #FFF0F0; --red: #C0392B;
-  --amber-bg: #FFF8E8; --amber: #B7791F;
-  --green-bg: #EEF9F3; --green: #1A7F4B;
-  --gray-bg: #F1EFF7; --gray-c: #6B5FA6;
-  --radius: 12px;
-  --radius-sm: 7px;
+  --gold-l: #F0D080;
+  --bg: #EEF2F7;
+  --card: #FFFFFF;
+  --border: rgba(10,35,66,0.09);
+  --muted: #6B7E96;
+  --light: #A0B0C0;
+  --r: 12px;
+  --r-s: 7px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--navy);min-height:100vh;}
 
 /* HEADER */
-.header {
-  background: var(--blue-deep);
-  padding: 0 2rem;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 64px;
-  border-bottom: 2px solid var(--gold);
-}
-.header-left { display: flex; align-items: center; gap: 14px; }
-.logo-badge {
-  background: var(--gold);
-  color: var(--blue-deep);
-  font-weight: 700; font-size: 13px;
-  padding: 4px 10px; border-radius: 4px;
-  letter-spacing: 0.03em;
-}
-.header h1 { color: #fff; font-size: 17px; font-weight: 500; }
-.header-right { display: flex; align-items: center; gap: 12px; }
-.sync-time { color: var(--gold-light); font-size: 12px; font-family: 'DM Mono', monospace; }
-.btn-sync {
-  background: transparent; border: 1px solid rgba(201,168,76,0.5);
-  color: var(--gold-light); font-size: 12px; padding: 5px 12px;
-  border-radius: 5px; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
-  transition: all 0.2s;
-}
-.btn-sync:hover { background: rgba(201,168,76,0.15); }
+.hd{background:var(--navy);border-bottom:2px solid var(--gold);padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+.hd-l{display:flex;align-items:center;gap:12px;}
+.badge{background:var(--gold);color:var(--navy);font-weight:700;font-size:12px;padding:3px 9px;border-radius:4px;}
+.hd h1{color:#fff;font-size:16px;font-weight:500;}
+.hd-r{display:flex;align-items:center;gap:10px;}
+.sync{color:var(--gold-l);font-size:11px;font-family:'DM Mono',monospace;}
+.btn-save{background:transparent;border:1px solid rgba(201,168,76,0.5);color:var(--gold-l);font-size:12px;padding:4px 12px;border-radius:5px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.btn-save:hover{background:rgba(201,168,76,0.15);}
 
-/* SUMMARY STRIP */
-.summary-strip {
-  background: var(--blue-mid);
-  padding: 0 2rem;
-  display: flex; gap: 0; overflow-x: auto;
-}
-.sum-item {
-  padding: 14px 28px; border-right: 1px solid rgba(255,255,255,0.1);
-  min-width: 120px;
-}
-.sum-item:last-child { border-right: none; }
-.sum-label { font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 4px; letter-spacing: 0.05em; }
-.sum-val { font-size: 22px; font-weight: 700; color: #fff; font-family: 'DM Mono', monospace; }
-.sum-val span { font-size: 12px; font-weight: 400; color: var(--gold-light); margin-left: 4px; }
+/* SUMMARY */
+.summary{background:var(--navy2);display:flex;gap:0;overflow-x:auto;padding:0 20px;}
+.si{padding:11px 24px;border-right:1px solid rgba(255,255,255,0.1);min-width:100px;}
+.si:last-child{border:none;}
+.si-label{font-size:10px;color:rgba(255,255,255,0.55);margin-bottom:3px;letter-spacing:.05em;}
+.si-val{font-size:20px;font-weight:700;color:#fff;font-family:'DM Mono',monospace;}
+.si-val span{font-size:11px;font-weight:400;color:var(--gold-l);margin-left:3px;}
 
 /* TABS */
-.tabs { display: flex; gap: 0; padding: 1.5rem 2rem 0; border-bottom: 1px solid var(--border); background: var(--surface); }
-.tab-btn {
-  padding: 10px 24px; font-size: 14px; font-weight: 500;
-  background: none; border: none; cursor: pointer;
-  color: var(--text-muted); border-bottom: 3px solid transparent;
-  transition: all 0.2s; font-family: 'Noto Sans KR', sans-serif;
-  margin-bottom: -1px;
-}
-.tab-btn.active { color: var(--blue-bright); border-bottom-color: var(--blue-bright); }
-.tab-btn:hover:not(.active) { color: var(--text); }
+.tabs{background:var(--card);border-bottom:1px solid var(--border);padding:0 20px;display:flex;gap:0;}
+.tab{padding:9px 20px;font-size:13px;font-weight:500;background:none;border:none;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:'Noto Sans KR',sans-serif;transition:all .2s;}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue);}
 
-/* MAIN */
-.main { padding: 1.5rem 2rem; max-width: 1200px; }
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;padding:16px 20px;}
 
-/* TABLE */
-.table-card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-.table-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-}
-.table-title { font-size: 14px; font-weight: 700; color: var(--blue-deep); display: flex; align-items: center; gap: 8px; }
-.table-sub { font-size: 12px; color: var(--text-muted); font-weight: 400; }
-.edit-hint { font-size: 11px; color: var(--text-light); }
+/* TEACHER CARD */
+.tc{background:var(--card);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;}
+.tc-head{padding:12px 14px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.tc-name{font-size:15px;font-weight:700;color:var(--navy);}
+.tc-days{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;}
+.tc-total{text-align:right;}
+.tc-total-num{font-size:22px;font-weight:700;font-family:'DM Mono',monospace;color:var(--navy);}
+.tc-total-label{font-size:10px;color:var(--muted);}
 
-table { width: 100%; border-collapse: collapse; }
-thead tr { background: var(--surface2); }
-th {
-  padding: 10px 14px; font-size: 12px; font-weight: 500;
-  color: var(--text-muted); text-align: center;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
-th:first-child { text-align: left; width: 100px; }
-td {
-  padding: 0; text-align: center;
-  border-bottom: 1px solid var(--border);
-  vertical-align: middle;
-}
-td:first-child { text-align: left; padding: 0 14px; }
-tr:last-child td { border-bottom: none; }
-tr:hover { background: #F8FAFD; }
-
-/* CELL */
-.cell-wrap { padding: 10px 14px; }
-.grade-tag {
-  display: inline-block; font-size: 10px; font-weight: 500;
-  padding: 1px 6px; border-radius: 3px; margin-bottom: 4px;
-}
-.g1 { background: #E8F0FF; color: #1B4F8A; }
-.g2 { background: #E8F7F0; color: #1A7F4B; }
-.g3 { background: #FFF3E0; color: #B7600E; }
-.ga { background: #F3EFFF; color: #5B45A8; }
-
-.num-row { display: flex; align-items: center; justify-content: center; gap: 6px; }
-.cur-num {
-  font-size: 18px; font-weight: 700; font-family: 'DM Mono', monospace;
-  color: var(--blue-deep);
-  cursor: pointer; padding: 2px 6px; border-radius: 4px;
-  transition: background 0.15s;
-}
-.cur-num:hover { background: #EEF4FF; }
-.cur-num.editing {
-  background: #EEF4FF; outline: 2px solid var(--blue-bright);
-}
-.max-txt { font-size: 11px; color: var(--text-light); }
-
-.badge {
-  display: inline-block; font-size: 10px; font-weight: 500;
-  padding: 2px 7px; border-radius: 10px; margin-top: 3px;
-}
-.badge-full { background: var(--red-bg); color: var(--red); }
-.badge-near { background: var(--amber-bg); color: var(--amber); }
-.badge-ok { background: var(--green-bg); color: var(--green); }
-.badge-na { background: var(--gray-bg); color: var(--gray-c); }
-
-.teacher-name { font-size: 14px; font-weight: 500; color: var(--blue-deep); }
-.teacher-days { font-size: 11px; color: var(--text-muted); margin-top: 2px; font-family: 'DM Mono', monospace; }
-
-.total-cell { font-size: 15px; font-weight: 700; font-family: 'DM Mono', monospace; color: var(--blue-deep); }
-.total-max { font-size: 11px; color: var(--text-muted); }
-
-/* EDIT INPUT */
-.inline-input {
-  width: 50px; text-align: center; font-size: 16px; font-weight: 700;
-  font-family: 'DM Mono', monospace; border: none; background: transparent;
-  outline: none; color: var(--blue-deep);
-}
+/* SLOTS */
+.slots{padding:10px 14px;display:flex;flex-direction:column;gap:7px;}
+.slot{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r-s);background:var(--bg);cursor:pointer;transition:background .15s;border:1px solid transparent;}
+.slot:hover{background:#E4EBF5;border-color:var(--border);}
+.slot.open{background:#EAF1FB;border-color:rgba(46,134,222,0.2);}
+.slot-part{font-size:11px;font-weight:500;color:var(--muted);width:28px;flex-shrink:0;}
+.slot-grade{flex-shrink:0;}
+.gtag{font-size:10px;font-weight:500;padding:2px 6px;border-radius:3px;}
+.g1{background:#E3EEFF;color:#1B4F8A;}
+.g2{background:#E3F5EC;color:#1A7F4B;}
+.g3{background:#FFF0E0;color:#B7600E;}
+.ga{background:#F0ECFF;color:#5B45A8;}
+.slot-bar{flex:1;height:7px;background:rgba(10,35,66,0.08);border-radius:4px;overflow:hidden;}
+.slot-fill{height:100%;border-radius:4px;transition:width .3s;}
+.fill-full{background:#E24B4A;}
+.fill-near{background:#EF9F27;}
+.fill-ok{background:#1D9E75;}
+.fill-na{background:#9BAAB8;}
+.slot-nums{font-size:12px;font-weight:500;font-family:'DM Mono',monospace;color:var(--navy);white-space:nowrap;min-width:52px;text-align:right;}
+.slot-badge{font-size:10px;font-weight:500;padding:2px 6px;border-radius:10px;white-space:nowrap;min-width:44px;text-align:center;}
+.b-full{background:#FEE;color:#C0392B;}
+.b-near{background:#FFF5E0;color:#B7791F;}
+.b-ok{background:#E8F8F0;color:#1A7F4B;}
+.b-na{background:#F0EEF8;color:#6B5FA6;}
+.slot-arrow{font-size:12px;color:var(--light);transition:transform .2s;}
+.slot.open .slot-arrow{transform:rotate(90deg);}
 
 /* STUDENT PANEL */
-.student-panel {
-  display: none;
-  background: #F8FAFD; border-top: 1px solid var(--border);
-}
-.student-panel.open { display: block; }
-.student-inner { padding: 12px 20px; }
-.student-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.s-chip {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px; padding: 3px 10px; font-size: 12px;
-  color: var(--text); display: flex; align-items: center; gap: 4px;
-}
-.s-chip .del-s {
-  color: var(--text-light); cursor: pointer; font-size: 14px;
-  line-height: 1; padding: 0 2px;
-}
-.s-chip .del-s:hover { color: var(--red); }
-.add-student-row { display: flex; gap: 8px; margin-top: 10px; }
-.add-student-row input {
-  flex: 1; padding: 6px 10px; border: 1px solid var(--border);
-  border-radius: 6px; font-size: 13px; font-family: 'Noto Sans KR', sans-serif;
-  outline: none;
-}
-.add-student-row input:focus { border-color: var(--blue-bright); }
-.btn-add-s {
-  padding: 6px 14px; background: var(--blue-bright); color: #fff;
-  border: none; border-radius: 6px; cursor: pointer; font-size: 13px;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.panel-label { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+.stu-panel{display:none;padding:8px 14px 12px;border-top:1px solid var(--border);background:#F7FAFF;}
+.stu-panel.open{display:block;}
+.stu-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
+.chip{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:3px 8px;font-size:11px;color:var(--navy);display:flex;align-items:center;gap:3px;}
+.chip-del{color:var(--light);cursor:pointer;font-size:13px;line-height:1;}
+.chip-del:hover{color:#E24B4A;}
+.stu-add{display:flex;gap:6px;margin-top:6px;}
+.stu-add input{flex:1;padding:5px 9px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:'Noto Sans KR',sans-serif;outline:none;background:var(--card);}
+.stu-add input:focus{border-color:var(--blue);}
+.stu-add button{padding:5px 12px;background:var(--blue);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-family:'Noto Sans KR',sans-serif;}
+.stu-label{font-size:11px;color:var(--muted);margin-bottom:5px;}
 
-/* LEGEND */
-.legend { display: flex; gap: 16px; padding: 1rem 0 0; flex-wrap: wrap; }
-.leg { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
-.leg-dot { width: 8px; height: 8px; border-radius: 2px; }
-
-/* NOTE */
-.note-box {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 14px 20px;
-  margin-bottom: 1.5rem;
-}
-.note-box p { font-size: 12px; color: var(--text-muted); line-height: 1.8; }
-
-/* MODAL */
-.modal-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(10,35,66,0.4); z-index: 100;
-  align-items: center; justify-content: center;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--surface); border-radius: var(--radius);
-  padding: 24px; width: 340px; max-width: 90vw;
-}
-.modal h3 { font-size: 16px; margin-bottom: 16px; color: var(--blue-deep); }
-.modal-msg { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.7; }
-.modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
-.btn-cancel { padding: 8px 16px; border: 1px solid var(--border); border-radius: 6px; background: none; cursor: pointer; font-size: 13px; font-family: 'Noto Sans KR', sans-serif; }
-.btn-confirm { padding: 8px 16px; background: var(--blue-bright); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: 'Noto Sans KR', sans-serif; }
+/* GROUP LABEL */
+.group-label{padding:6px 20px 2px;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.05em;}
 
 /* TOAST */
-.toast {
-  position: fixed; bottom: 24px; right: 24px;
-  background: var(--blue-deep); color: #fff;
-  padding: 10px 18px; border-radius: 8px; font-size: 13px;
-  opacity: 0; transform: translateY(10px);
-  transition: all 0.3s; pointer-events: none; z-index: 200;
-}
-.toast.show { opacity: 1; transform: translateY(0); }
+.toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;padding:9px 16px;border-radius:8px;font-size:12px;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;z-index:99;}
+.toast.show{opacity:1;transform:translateY(0);}
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .main { padding: 1rem; }
-  .header { padding: 0 1rem; }
-  .summary-strip { padding: 0 1rem; }
-  .tabs { padding: 1rem 1rem 0; }
-  th, td { padding: 8px; font-size: 12px; }
-  .sum-item { padding: 12px 16px; }
+/* LEGEND */
+.legend{display:flex;flex-wrap:wrap;gap:14px;padding:4px 20px 16px;}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
+.leg-dot{width:8px;height:8px;border-radius:2px;}
+
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr;padding:12px;}
+  .si{padding:10px 14px;}
 }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-left">
-    <div class="logo-badge">파란수학</div>
-    <h1>고등관 인원 현황판</h1>
+<div class="hd">
+  <div class="hd-l">
+    <div class="badge">파란수학</div>
+    <h1>고등관 인원 현황</h1>
   </div>
-  <div class="header-right">
-    <span class="sync-time" id="syncTime"></span>
-    <button class="btn-sync" onclick="saveData()">저장</button>
-  </div>
-</div>
-
-<div class="summary-strip" id="summaryStrip"></div>
-
-<div style="background:var(--surface)">
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('all')">전체 보기</button>
-    <button class="tab-btn" onclick="switchTab('mwf')">월수금</button>
-    <button class="tab-btn" onclick="switchTab('tts')">화목토</button>
-    <button class="tab-btn" onclick="switchTab('wknd')">주말</button>
+  <div class="hd-r">
+    <span class="sync" id="syncTime"></span>
+    <button class="btn-save" onclick="saveData()">저장</button>
   </div>
 </div>
 
-<div class="main" id="mainContent"></div>
+<div class="summary" id="summary"></div>
+
+<div class="tabs">
+  <button class="tab on" onclick="setTab('all',this)">전체</button>
+  <button class="tab" onclick="setTab('mwf',this)">월수금</button>
+  <button class="tab" onclick="setTab('tts',this)">화목토</button>
+  <button class="tab" onclick="setTab('wknd',this)">주말</button>
+</div>
+
+<div id="root"></div>
 
 <div class="legend">
-  <div class="leg"><div class="leg-dot" style="background:#F4BBBB"></div>마감 임박 (여유 1명 이하)</div>
-  <div class="leg"><div class="leg-dot" style="background:#F9E0A0"></div>추가 2~3명 가능</div>
-  <div class="leg"><div class="leg-dot" style="background:#A8DFC0"></div>추가 4명 이상</div>
-  <div class="leg"><div class="leg-dot" style="background:#C8BFF0"></div>고3·개별 (상한없음)</div>
+  <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>마감·임박</div>
+  <div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>+2~3명 가능</div>
+  <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>+4명 이상</div>
+  <div class="leg"><div class="leg-dot" style="background:#9BAAB8"></div>고3·개별</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <h3 id="modalTitle"></h3>
-    <div class="modal-msg" id="modalMsg"></div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal()">취소</button>
-      <button class="btn-confirm" id="modalConfirm">확인</button>
-    </div>
-  </div>
-</div>
-
 <script>
-const DEFAULT_DATA = {
+const INIT = {
   lastUpdated: new Date().toISOString(),
   teachers: [
-    {
-      id: 'pjh', name: '박지환T', days: { mwf: '월·수·금', tts: '화·목·토' },
-      slots: [
-        { id:'pjh_m1', group:'mwf', part:'1부', grade:'고1', max:10, students:['김유준(가좌고1)','최강(대진고1)','전하윤(대진고1)','최시현(주엽고1)','김수현(대진고1)','김민채(대진고1)'] },
-        { id:'pjh_m2', group:'mwf', part:'2부', grade:'고1', max:10, students:['김보민(정발고1)','이서진(저동고1)','고정완(대화고1)','노희수(백신고1)','강예나(백마고1)'] },
-        { id:'pjh_t1', group:'tts', part:'1부', grade:'고1', max:10, students:['김민균(대화고1)','도현우(주엽고1)','심소윤(대진고1)','선민서(대진고1)','김윤재(대진고1)','홍성웅(대진고1)'] },
-        { id:'pjh_t2', group:'tts', part:'2부', grade:'고1', max:10, students:['김지호(안곡고1)','조유찬(저동고1)','서진혁(안곡고1)','지아영(세원고1)','김제권(주엽고1)'] },
-      ]
-    },
-    {
-      id: 'pjy', name: '박지윤T', days: { mwf: '월·수·금', tts: '화·목·토' },
-      slots: [
-        { id:'pjy_m1', group:'mwf', part:'1부', grade:'고1', max:10, students:['노수민(풍동고1)','윤승준(대진고1)','박시우(주엽고1)','박채원(주엽고1)','김세영(주엽고1)','이상헌(중산고1)','김재원(덕이고1)','김아영(안곡고1)'] },
-        { id:'pjy_m2', group:'mwf', part:'2부', grade:'고1', max:10, students:['김빛(대화고1)','신승훈(대화고1)','김가율(대화고1)','서진혁(대진고1)','유건영(대진고1)','주아린(대진고1)'] },
-        { id:'pjy_t1', group:'tts', part:'1부', grade:'고1', max:10, students:['전시온(동패고1)','단희주(백신고1)','편근영(백신고1)','박다솔(주엽고1)','남송하(가좌고1)','최유석(안곡고1)'] },
-        { id:'pjy_t2', group:'tts', part:'2부', grade:'고1', max:10, students:['이채린(가좌고1)','백시연(주엽고1)','최준우(주엽고1)','안세미(대진고1)','최정인(대진고1)','박규민(주엽고1)'] },
-      ]
-    },
-    {
-      id: 'phn', name: '박혜남T', days: { mwf: '월·수·금', tts: '화·목·토' },
-      slots: [
-        { id:'phn_m1', group:'mwf', part:'1부', grade:'고1', max:10, students:['심규진(가좌고1)','최규민(안곡고1)','한예린(대화고1)','이우현(안곡고1)','양시아(대진고1)','장로이(봉일천1)','이희성(대진고1)','김별(대진고1)'] },
-        { id:'phn_m2', group:'mwf', part:'2부', grade:'고1', max:10, students:['강민서(대진고1)','최민준(대진고1)','최준희(대진고1)','한승훈(대진고1)','최민제(저동고1)','이현우(가좌고1)','안지원(일산동1)'] },
-        { id:'phn_t1', group:'tts', part:'1부', grade:'고1', max:10, students:['오찬율(세원고1)','최정원(대화고1)','오재원(주엽고1)','설예진(대진고1)','봉현우(대진고1)'] },
-        { id:'phn_t2', group:'tts', part:'2부', grade:'고1', max:10, students:['이윤신(주엽고1)','서준우(정발고1)','김유빈(대화고1)','전현준(저동고1)','유지호(일산동1)','박수현(일산동1)'] },
-      ]
-    },
-    {
-      id: 'lhb', name: '이해빈T', days: { mwf: '월·수·금', tts: '화·목·토' },
-      slots: [
-        { id:'lhb_m1', group:'mwf', part:'1부', grade:'고1', max:10, students:['하지훈(백석고1)','정지호(동패고1)','이아인(대화고1)','홍석윤(대진고1)','박재원(대진고1)','송은찬(주엽고1)','김은찬(대진고1)','김별(대진고1)','이소율(대진고1)'] },
-        { id:'lhb_m2', group:'mwf', part:'2부', grade:'고1', max:10, students:['심규진(가좌고1)','한예린(대화고1)','이우현(안곡고1)','양시아(대진고1)','장로이(봉일천1)','이희성(대진고1)','이한결(주엽고1)'] },
-        { id:'lhb_t1', group:'tts', part:'1부', grade:'고2', max:12, students:['김규린(대화고2)','이연서(주엽고2)','박지민(대진고2)','오유나(세원고2)','송예빈(대진고2)','최원빈(일산동2)','이지민(대화고2)'] },
-        { id:'lhb_t2', group:'tts', part:'2부', grade:'고2', max:12, students:['민지윤(중산고2)','장선우(가좌고2)','김도현(안곡고2)','박새준(대화고2)','박규리(대진고2)','정하윤(대진고2)'] },
-      ]
-    },
-    {
-      id: 'chj', name: '조희재T', days: { mwf: '월·수·금', tts: '화·목·토' },
-      slots: [
-        { id:'chj_m1', group:'mwf', part:'1부', grade:'고2', max:12, students:['윤주원(일산동2)','김보민(주엽고2)','김강후(가좌고2)','홍서빈(백신고2)','박준형(중산고2)','정지연(덕이고2)','김범석(중산고2)','김준엽(가좌고2)','신민지(일산동2)'] },
-        { id:'chj_m2', group:'mwf', part:'2부', grade:'고1', max:10, students:['차성연(저동고1)','이도윤(안곡고1)','서민기(대진고1)','이주안(대진고1)','이유주(대화고1)','장우영(김포외고1)','김은찬(대진고1)','이소율(대진고1)'] },
-        { id:'chj_t1', group:'tts', part:'1부', grade:'고2', max:12, students:['이해인(대화고2)','박윤제(대화고2)','함소희(정발고2)','한윤결(세원고2)','김준영(백신고2)','이예건(대화고2)','이동윤(주엽고2)','황준혁(일산동2)'] },
-        { id:'chj_t2', group:'tts', part:'2부', grade:'고2', max:12, students:['최정우(저동고2)','백하나(저동고2)','황준하(저동고2)','이하경(안곡고2)','윤재영(안곡고2)','이성배(대진고2)','박건희(중산고2)'] },
-      ]
-    },
-    {
-      id: 'lyj', name: '이영주T', days: { mwf: '수·금·일', tts: '화·목·토' },
-      slots: [
-        { id:'lyj_m1', group:'mwf', part:'1부', grade:'고1', max:10, students:['하지훈(백석고1)','정지호(동패고1)','이아인(대화고1)','홍석윤(대진고1)','박재원(대진고1)','송은찬(주엽고1)','김은찬(대진고1)','김별(대진고1)','이소율(대진고1)'] },
-        { id:'lyj_m2', group:'mwf', part:'2부', grade:'고2', max:12, students:['조현수(대진고2)','이주학(대진고2)','안나연(대진고2)','김경수(대진고2)','이주성(대진고2)','김무겸(대진고2)','허나윤(백석고2)','김무경(대진고2)'] },
-        { id:'lyj_t1', group:'tts', part:'1부', grade:'고3', max:null, students:['최대희(정발고3)','장지연(안곡고3)','장승연(안곡고3)','김민재(주엽고3)','김수아(대화고3)','권나영(대진고3)','최유성(대진고3)'] },
-        { id:'lyj_t2', group:'tts', part:'2부', grade:'고3', max:null, students:['윤서하(대진고3)','임지후(세원고3)','이기혁(세원고3)','목지원(저동고3)','김동규(대화고3)','김은세(대진고3)','김태훈(정발고3)','장연희(대진고3)'] },
-      ]
-    },
-    {
-      id: 'ich', name: '인창현T', days: { mwf: '월·수·금', tts: '화·목·토' },
-      slots: [
-        { id:'ich_m1', group:'mwf', part:'1부', grade:'고2', max:12, students:['지예혁(안곡고2)','한경민(대진고2)','김가율(주엽고2)','김민수(주엽고2)','김은(저동고2)','임강현(저동고2)','김하진(대화고2)','최소영(대진고2)','김경민(한빛고2)'] },
-        { id:'ich_m2', group:'mwf', part:'2부', grade:'고2', max:12, students:['최현민(대진고2)','김가은(저동고2)','박기열(대화고2)','송현우(대화고2)','채서윤(대화고2)','정하은(주엽고2)'] },
-        { id:'ich_t1', group:'tts', part:'1부', grade:'고2', max:12, students:['김하성(저현고2)','정예준(백신고2)','김민서(가좌고2)','한민재(가좌고2)','박서준(가좌고2)'] },
-        { id:'ich_t2', group:'tts', part:'2부', grade:'고2', max:12, students:['이윤아(대진고2)','김시후(가좌고2)','배준서(가좌고2)','박건영(대화고2)','전민승(세원고2)'] },
-      ]
-    },
-    {
-      id: 'nhs', name: '나홍수T', days: { mwf: '월·수·금', tts: '화·목·토' },
-      slots: [
-        { id:'nhs_m1', group:'mwf', part:'1부', grade:'고3', max:null, students:['최준혁(저동고3)','정민준(주엽고3)','박주은(주엽고3)','김수현(덕이고3)','김진예(동패고3)','이규한(대화고3)'] },
-        { id:'nhs_m2', group:'mwf', part:'2부', grade:'고1', max:10, students:['심승우(주엽고1)','임규환(대진고1)','오태윤(대진고1)','옥승재(대진고1)','김지후(풍동고1)','안나윤(대진고1)','이동훈(주엽고1)'] },
-        { id:'nhs_t1', group:'tts', part:'1부', grade:'고3', max:null, students:['김선국(가좌고3)','문태윤(가좌고3)','박지영(대화고3)','박준영(주엽고3)','전예서(저동고3)'] },
-        { id:'nhs_t2', group:'tts', part:'2부', grade:'고3', max:null, students:['박무현(저동고3)','양현지(덕이고3)','한유진(저동고3)','서재우(대화고3)','양희건(안곡고3)'] },
-      ]
-    },
-    {
-      id: 'jkm', name: '장경민T', days: { mwf: null, tts: null, wknd: '주말(토·일)' },
-      slots: [
-        { id:'jkm_w1', group:'wknd', part:'J2 토·일 (운정고1)', grade:'고1', max:15, students:['김민(운정고1)','노휘찬(운정고1)','서재영(운정고1)','서연우(운정고1)','이지윤(운정고1)','최용호(운정고1)','한이준(운정고1)','허유준(운정고1)','류가은(운정고1)','김아라(운정고1)','신현일(운정고1)','김민혁(운정고1)'] },
-        { id:'jkm_w2', group:'wknd', part:'운정고2 A반 토·일', grade:'고2', max:15, students:['김동준(운정고2)','김호준(운정고2)','안유주(운정고2)','엄주원(운정고2)','이지효(운정고2)','박범준(운정고2)','유지훈(운정고2)','김진율(운정고2)','박연정(운정고2)','한지호(운정고2)','정하윤(운정고2)','최연우(운정고2)'] },
-        { id:'jkm_w3', group:'wknd', part:'운정고2 B반 토·일', grade:'고2', max:15, students:['김준래(운정고2)','신지호(운정고2)','김찬형(운정고2)','조영훈(운정고2)','황지상(운정고2)','전서윤(운정고2)','서원혁(운정고2)','강현구(운정고2)','김채윤(운정고2)'] },
-      ]
-    },
-    {
-      id: 'nje', name: '노지은T', days: { mwf: '월·수·금', tts: '화·목·토', wknd: '주말' },
-      slots: [
-        { id:'nje_m1', group:'mwf', part:'1부', grade:'고3', max:null, students:['정우현(안곡고3)','방지원(대진고3)','노주오(저동고1)','최규진(주엽고1)','황민재(주엽고3)'] },
-        { id:'nje_m2', group:'mwf', part:'2부', grade:'고3', max:null, students:['윤진서(세원고3)','신주현(백신고3)','유승주(가좌고3)'] },
-        { id:'nje_t1', group:'tts', part:'1부', grade:'고3', max:null, students:['김선국(가좌고3)','문태윤(가좌고3)','박지영(대화고3)','박준영(주엽고3)','전예서(저동고3)'] },
-        { id:'nje_t2', group:'tts', part:'2부', grade:'고3', max:null, students:['박무현(저동고3)','양현지(덕이고3)','한유진(저동고3)','서재우(대화고3)','양희건(안곡고3)'] },
-        { id:'nje_w1', group:'wknd', part:'주말 개별', grade:'개별', max:null, students:['남궁승(고국고3)','백서윤(고국고3)','송연지(고국고3)','성은채(운정고3)','이예진(고국고3)','오주환(운정고3)','고경태(운정고3)','성지영(고국고3)','이채현(고국고2)','모예은(고양외고3)'] },
-      ]
-    },
+    { id:'pjh', name:'박지환T', slots:[
+      {id:'pjh_m1',g:'mwf',part:'1부',grade:'고1',max:10,stu:['김유준(가좌고1)','최강(대진고1)','전하윤(대진고1)','최시현(주엽고1)','김수현(대진고1)','김민채(대진고1)']},
+      {id:'pjh_m2',g:'mwf',part:'2부',grade:'고1',max:10,stu:['김보민(정발고1)','이서진(저동고1)','고정완(대화고1)','노희수(백신고1)','강예나(백마고1)']},
+      {id:'pjh_t1',g:'tts',part:'1부',grade:'고1',max:10,stu:['김민균(대화고1)','도현우(주엽고1)','심소윤(대진고1)','선민서(대진고1)','김윤재(대진고1)','홍성웅(대진고1)']},
+      {id:'pjh_t2',g:'tts',part:'2부',grade:'고1',max:10,stu:['김지호(안곡고1)','조유찬(저동고1)','서진혁(안곡고1)','지아영(세원고1)','김제권(주엽고1)']},
+    ], days:'월·수·금 / 화·목·토'},
+    { id:'pjy', name:'박지윤T', slots:[
+      {id:'pjy_m1',g:'mwf',part:'1부',grade:'고1',max:10,stu:['노수민(풍동고1)','윤승준(대진고1)','박시우(주엽고1)','박채원(주엽고1)','김세영(주엽고1)','이상헌(중산고1)','김재원(덕이고1)','김아영(안곡고1)']},
+      {id:'pjy_m2',g:'mwf',part:'2부',grade:'고1',max:10,stu:['김빛(대화고1)','신승훈(대화고1)','김가율(대화고1)','서진혁(대진고1)','유건영(대진고1)','주아린(대진고1)']},
+      {id:'pjy_t1',g:'tts',part:'1부',grade:'고1',max:10,stu:['전시온(동패고1)','단희주(백신고1)','편근영(백신고1)','박다솔(주엽고1)','남송하(가좌고1)','최유석(안곡고1)']},
+      {id:'pjy_t2',g:'tts',part:'2부',grade:'고1',max:10,stu:['이채린(가좌고1)','백시연(주엽고1)','최준우(주엽고1)','안세미(대진고1)','최정인(대진고1)','박규민(주엽고1)']},
+    ], days:'월·수·금 / 화·목·토'},
+    { id:'phn', name:'박혜남T', slots:[
+      {id:'phn_m1',g:'mwf',part:'1부',grade:'고1',max:10,stu:['심규진(가좌고1)','최규민(안곡고1)','한예린(대화고1)','이우현(안곡고1)','양시아(대진고1)','장로이(봉일천1)','이희성(대진고1)','김별(대진고1)']},
+      {id:'phn_m2',g:'mwf',part:'2부',grade:'고1',max:10,stu:['강민서(대진고1)','최민준(대진고1)','최준희(대진고1)','한승훈(대진고1)','최민제(저동고1)','이현우(가좌고1)','안지원(일산동1)']},
+      {id:'phn_t1',g:'tts',part:'1부',grade:'고1',max:10,stu:['오찬율(세원고1)','최정원(대화고1)','오재원(주엽고1)','설예진(대진고1)','봉현우(대진고1)']},
+      {id:'phn_t2',g:'tts',part:'2부',grade:'고1',max:10,stu:['이윤신(주엽고1)','서준우(정발고1)','김유빈(대화고1)','전현준(저동고1)','유지호(일산동1)','박수현(일산동1)']},
+    ], days:'월·수·금 / 화·목·토'},
+    { id:'lhb', name:'이해빈T', slots:[
+      {id:'lhb_m1',g:'mwf',part:'1부',grade:'고1',max:10,stu:['하지훈(백석고1)','정지호(동패고1)','이아인(대화고1)','홍석윤(대진고1)','박재원(대진고1)','송은찬(주엽고1)','김은찬(대진고1)','김별(대진고1)','이소율(대진고1)']},
+      {id:'lhb_m2',g:'mwf',part:'2부',grade:'고1',max:10,stu:['심규진(가좌고1)','한예린(대화고1)','이우현(안곡고1)','양시아(대진고1)','장로이(봉일천1)','이희성(대진고1)','이한결(주엽고1)']},
+      {id:'lhb_t1',g:'tts',part:'1부',grade:'고2',max:12,stu:['김규린(대화고2)','이연서(주엽고2)','박지민(대진고2)','오유나(세원고2)','송예빈(대진고2)','최원빈(일산동2)','이지민(대화고2)']},
+      {id:'lhb_t2',g:'tts',part:'2부',grade:'고2',max:12,stu:['민지윤(중산고2)','장선우(가좌고2)','김도현(안곡고2)','박새준(대화고2)','박규리(대진고2)','정하윤(대진고2)']},
+    ], days:'월·수·금 / 화·목·토'},
+    { id:'chj', name:'조희재T', slots:[
+      {id:'chj_m1',g:'mwf',part:'1부',grade:'고2',max:12,stu:['윤주원(일산동2)','김보민(주엽고2)','김강후(가좌고2)','홍서빈(백신고2)','박준형(중산고2)','정지연(덕이고2)','김범석(중산고2)','김준엽(가좌고2)','신민지(일산동2)']},
+      {id:'chj_m2',g:'mwf',part:'2부',grade:'고1',max:10,stu:['차성연(저동고1)','이도윤(안곡고1)','서민기(대진고1)','이주안(대진고1)','이유주(대화고1)','장우영(김포외고1)','김은찬(대진고1)','이소율(대진고1)']},
+      {id:'chj_t1',g:'tts',part:'1부',grade:'고2',max:12,stu:['이해인(대화고2)','박윤제(대화고2)','함소희(정발고2)','한윤결(세원고2)','김준영(백신고2)','이예건(대화고2)','이동윤(주엽고2)','황준혁(일산동2)']},
+      {id:'chj_t2',g:'tts',part:'2부',grade:'고2',max:12,stu:['최정우(저동고2)','백하나(저동고2)','황준하(저동고2)','이하경(안곡고2)','윤재영(안곡고2)','이성배(대진고2)','박건희(중산고2)']},
+    ], days:'월·수·금 / 화·목·토'},
+    { id:'lyj', name:'이영주T', slots:[
+      {id:'lyj_m1',g:'mwf',part:'1부',grade:'고1',max:10,stu:['하지훈(백석고1)','정지호(동패고1)','이아인(대화고1)','홍석윤(대진고1)','박재원(대진고1)','송은찬(주엽고1)','김은찬(대진고1)','김별(대진고1)','이소율(대진고1)']},
+      {id:'lyj_m2',g:'mwf',part:'2부',grade:'고2',max:12,stu:['조현수(대진고2)','이주학(대진고2)','안나연(대진고2)','김경수(대진고2)','이주성(대진고2)','김무겸(대진고2)','허나윤(백석고2)','김무경(대진고2)']},
+      {id:'lyj_t1',g:'tts',part:'1부',grade:'고3',max:null,stu:['최대희(정발고3)','장지연(안곡고3)','장승연(안곡고3)','김민재(주엽고3)','김수아(대화고3)','권나영(대진고3)','최유성(대진고3)']},
+      {id:'lyj_t2',g:'tts',part:'2부',grade:'고3',max:null,stu:['윤서하(대진고3)','임지후(세원고3)','이기혁(세원고3)','목지원(저동고3)','김동규(대화고3)','김은세(대진고3)','김태훈(정발고3)','장연희(대진고3)']},
+    ], days:'수·금·일 / 화·목·토'},
+    { id:'ich', name:'인창현T', slots:[
+      {id:'ich_m1',g:'mwf',part:'1부',grade:'고2',max:12,stu:['지예혁(안곡고2)','한경민(대진고2)','김가율(주엽고2)','김민수(주엽고2)','김은(저동고2)','임강현(저동고2)','김하진(대화고2)','최소영(대진고2)','김경민(한빛고2)']},
+      {id:'ich_m2',g:'mwf',part:'2부',grade:'고2',max:12,stu:['최현민(대진고2)','김가은(저동고2)','박기열(대화고2)','송현우(대화고2)','채서윤(대화고2)','정하은(주엽고2)']},
+      {id:'ich_t1',g:'tts',part:'1부',grade:'고2',max:12,stu:['김하성(저현고2)','정예준(백신고2)','김민서(가좌고2)','한민재(가좌고2)','박서준(가좌고2)']},
+      {id:'ich_t2',g:'tts',part:'2부',grade:'고2',max:12,stu:['이윤아(대진고2)','김시후(가좌고2)','배준서(가좌고2)','박건영(대화고2)','전민승(세원고2)']},
+    ], days:'월·수·금 / 화·목·토'},
+    { id:'nhs', name:'나홍수T', slots:[
+      {id:'nhs_m1',g:'mwf',part:'1부',grade:'고3',max:null,stu:['최준혁(저동고3)','정민준(주엽고3)','박주은(주엽고3)','김수현(덕이고3)','김진예(동패고3)','이규한(대화고3)']},
+      {id:'nhs_m2',g:'mwf',part:'2부',grade:'고1',max:10,stu:['심승우(주엽고1)','임규환(대진고1)','오태윤(대진고1)','옥승재(대진고1)','김지후(풍동고1)','안나윤(대진고1)','이동훈(주엽고1)']},
+      {id:'nhs_t1',g:'tts',part:'1부',grade:'고3',max:null,stu:['김선국(가좌고3)','문태윤(가좌고3)','박지영(대화고3)','박준영(주엽고3)','전예서(저동고3)']},
+      {id:'nhs_t2',g:'tts',part:'2부',grade:'고3',max:null,stu:['박무현(저동고3)','양현지(덕이고3)','한유진(저동고3)','서재우(대화고3)','양희건(안곡고3)']},
+    ], days:'월·수·금 / 화·목·토'},
+    { id:'nje', name:'노지은T', slots:[
+      {id:'nje_m1',g:'mwf',part:'1부',grade:'고3',max:null,stu:['정우현(안곡고3)','방지원(대진고3)','노주오(저동고1)','최규진(주엽고1)','황민재(주엽고3)']},
+      {id:'nje_m2',g:'mwf',part:'2부',grade:'고3',max:null,stu:['윤진서(세원고3)','신주현(백신고3)','유승주(가좌고3)']},
+      {id:'nje_t1',g:'tts',part:'1부',grade:'고3',max:null,stu:['김선국(가좌고3)','문태윤(가좌고3)','박지영(대화고3)','박준영(주엽고3)','전예서(저동고3)']},
+      {id:'nje_t2',g:'tts',part:'2부',grade:'고3',max:null,stu:['박무현(저동고3)','양현지(덕이고3)','한유진(저동고3)','서재우(대화고3)','양희건(안곡고3)']},
+      {id:'nje_w1',g:'wknd',part:'개별',grade:'개별',max:null,stu:['남궁승(고국고3)','백서윤(고국고3)','송연지(고국고3)','성은채(운정고3)','이예진(고국고3)','오주환(운정고3)','고경태(운정고3)','성지영(고국고3)','이채현(고국고2)','모예은(고양외고3)']},
+    ], days:'월·수·금 / 화·목·토 / 주말'},
+    { id:'jkm', name:'장경민T', slots:[
+      {id:'jkm_w1',g:'wknd',part:'J2반',grade:'고1',max:15,stu:['김민(운정고1)','노휘찬(운정고1)','서재영(운정고1)','서연우(운정고1)','이지윤(운정고1)','최용호(운정고1)','한이준(운정고1)','허유준(운정고1)','류가은(운정고1)','김아라(운정고1)','신현일(운정고1)','김민혁(운정고1)']},
+      {id:'jkm_w2',g:'wknd',part:'운정2 A반',grade:'고2',max:15,stu:['김동준(운정고2)','김호준(운정고2)','안유주(운정고2)','엄주원(운정고2)','이지효(운정고2)','박범준(운정고2)','유지훈(운정고2)','김진율(운정고2)','박연정(운정고2)','한지호(운정고2)','정하윤(운정고2)','최연우(운정고2)']},
+      {id:'jkm_w3',g:'wknd',part:'운정2 B반',grade:'고2',max:15,stu:['김준래(운정고2)','신지호(운정고2)','김찬형(운정고2)','조영훈(운정고2)','황지상(운정고2)','전서윤(운정고2)','서원혁(운정고2)','강현구(운정고2)','김채윤(운정고2)']},
+    ], days:'토·일 주말'},
   ]
 };
 
-let data = JSON.parse(JSON.stringify(DEFAULT_DATA));
-let currentTab = 'all';
-let openPanels = new Set();
+let D = JSON.parse(JSON.stringify(INIT));
+let tab = 'all';
+let openSet = new Set();
 
-async function loadData() {
+async function load() {
   try {
-    const r = await window.storage.get('paran_enrollment_v2');
-    if (r && r.value) {
-      data = JSON.parse(r.value);
-    }
+    const r = await window.storage.get('paran_v3');
+    if (r && r.value) D = JSON.parse(r.value);
   } catch(e) {}
   render();
 }
 
 async function saveData() {
-  data.lastUpdated = new Date().toISOString();
+  D.lastUpdated = new Date().toISOString();
   try {
-    await window.storage.set('paran_enrollment_v2', JSON.stringify(data));
-    showToast('저장되었습니다');
-    updateSyncTime();
-  } catch(e) {
-    showToast('저장 실패: ' + e.message);
-  }
+    await window.storage.set('paran_v3', JSON.stringify(D));
+    toast('저장되었습니다');
+    syncTime();
+  } catch(e) { toast('저장 실패'); }
 }
 
-function updateSyncTime() {
-  const d = new Date(data.lastUpdated);
+function syncTime() {
+  const d = new Date(D.lastUpdated);
   document.getElementById('syncTime').textContent =
-    `최종 저장: ${d.getMonth()+1}/${d.getDate()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
+    `저장: ${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 }
 
-function badgeInfo(n, max) {
-  if (!max) return { cls:'badge-na', txt:'개별', remain: null };
+function bi(n, max) {
+  if (!max) return {fc:'fill-na',bc:'b-na',bt:'개별'};
   const r = max - n;
-  if (r <= 0) return { cls:'badge-full', txt:'마감', remain: 0 };
-  if (r <= 1) return { cls:'badge-full', txt:`+${r}명`, remain: r };
-  if (r <= 3) return { cls:'badge-near', txt:`+${r}명`, remain: r };
-  return { cls:'badge-ok', txt:`+${r}명`, remain: r };
+  if (r <= 0) return {fc:'fill-full',bc:'b-full',bt:'마감'};
+  if (r <= 1) return {fc:'fill-full',bc:'b-full',bt:`+${r}명`};
+  if (r <= 3) return {fc:'fill-near',bc:'b-near',bt:`+${r}명`};
+  return {fc:'fill-ok',bc:'b-ok',bt:`+${r}명`};
 }
 
-function gradeTag(g) {
-  const map = { '고1':'g1', '고2':'g2', '고3':'g3', '개별':'ga' };
-  return `<span class="grade-tag ${map[g]||'ga'}">${g}</span>`;
-}
+function slotHTML(s) {
+  const n = s.stu.length;
+  const pct = s.max ? Math.min(100, Math.round(n/s.max*100)) : 60;
+  const {fc,bc,bt} = bi(n, s.max);
+  const maxTxt = s.max ? `/${s.max}` : '';
+  const gmap = {고1:'g1',고2:'g2',고3:'g3',개별:'ga'};
+  const isOpen = openSet.has(s.id);
 
-function slotCell(slot) {
-  const n = slot.students.length;
-  const bi = badgeInfo(n, slot.max);
-  const maxTxt = slot.max ? `/ ${slot.max}` : '';
+  const chips = s.stu.map((st,i) =>
+    `<div class="chip">${st}<span class="chip-del" onclick="delStu('${s.id}',${i})">×</span></div>`
+  ).join('');
+
   return `
-    <td>
-      <div class="cell-wrap">
-        ${gradeTag(slot.grade)}
-        <div class="num-row">
-          <span class="cur-num" onclick="togglePanel('${slot.id}')"
-            title="클릭하여 학생 명단 보기">${n}</span>
-          <span class="max-txt">${maxTxt}</span>
-        </div>
-        <div><span class="badge ${bi.cls}">${bi.txt}</span></div>
-      </div>
-    </td>`;
-}
-
-function emptyCell() {
-  return `<td><span style="color:var(--color-text-tertiary);font-size:13px">—</span></td>`;
-}
-
-function totalCell(slots, group) {
-  const filtered = slots.filter(s => s.group === group);
-  if (filtered.length === 0) return emptyCell();
-  const n = filtered.reduce((a,s)=>a+s.students.length,0);
-  const maxSum = filtered.reduce((a,s)=>s.max?a+s.max:a, 0);
-  const hasMax = filtered.some(s=>s.max);
-  return `<td>
-    <div class="cell-wrap">
-      <div class="total-cell">${n}명</div>
-      ${hasMax ? `<div class="total-max">최대 ${maxSum}명</div>` : ''}
+    <div class="slot${isOpen?' open':''}" onclick="toggleSlot('${s.id}')">
+      <span class="slot-part">${s.part}</span>
+      <span class="slot-grade"><span class="gtag ${gmap[s.grade]||'ga'}">${s.grade}</span></span>
+      <div class="slot-bar"><div class="slot-fill ${fc}" style="width:${pct}%"></div></div>
+      <span class="slot-nums">${n}${maxTxt}</span>
+      <span class="slot-badge ${bc}">${bt}</span>
+      <span class="slot-arrow">▶</span>
     </div>
-  </td>`;
-}
-
-function studentPanel(slot) {
-  const isOpen = openPanels.has(slot.id);
-  return `
-    <tr class="student-panel ${isOpen?'open':''}" id="panel_${slot.id}">
-      <td colspan="10">
-        <div class="student-inner">
-          <div class="panel-label">${slot.part} 학생 명단 (${slot.students.length}명)</div>
-          <div class="student-list" id="slist_${slot.id}">
-            ${slot.students.map((s,i)=>`
-              <div class="s-chip" id="chip_${slot.id}_${i}">
-                ${s}
-                <span class="del-s" onclick="removeStudent('${slot.id}',${i})" title="삭제">×</span>
-              </div>`).join('')}
-          </div>
-          <div class="add-student-row">
-            <input type="text" id="newstu_${slot.id}" placeholder="이름(학교학년) 입력 후 Enter"
-              onkeydown="if(event.key==='Enter') addStudent('${slot.id}')">
-            <button class="btn-add-s" onclick="addStudent('${slot.id}')">추가</button>
-          </div>
-        </div>
-      </td>
-    </tr>`;
-}
-
-function renderTable(teachers, groups) {
-  const groupLabel = { mwf:'월수금', tts:'화목토', wknd:'주말' };
-  const parts = ['1부','2부'];
-
-  let html = '';
-  teachers.forEach(t => {
-    const relevantSlots = t.slots.filter(s => groups.includes(s.group));
-    if (relevantSlots.length === 0) return;
-
-    html += `<tbody>`;
-
-    // main row
-    let mainRow = `<tr>
-      <td style="padding:12px 14px">
-        <div class="teacher-name">${t.name}</div>
-        <div class="teacher-days">`;
-    ['mwf','tts','wknd'].forEach(g=>{
-      if (groups.includes(g) && t.days[g]) mainRow += `${groupLabel[g]}: ${t.days[g]}<br>`;
-    });
-    mainRow += `</div></td>`;
-
-    // slots by group and part
-    groups.forEach(g => {
-      ['1부','2부'].forEach(p => {
-        const slot = t.slots.find(s=>s.group===g && s.part===p);
-        if (slot) mainRow += slotCell(slot);
-        else if (t.slots.some(s=>s.group===g)) mainRow += emptyCell();
-      });
-      mainRow += totalCell(t.slots, g);
-    });
-
-    mainRow += `</tr>`;
-    html += mainRow;
-
-    // student panels per slot
-    relevantSlots.forEach(slot => {
-      html += studentPanel(slot);
-    });
-
-    html += `</tbody>`;
-  });
-  return html;
-}
-
-function buildTableCard(title, groups, teachers) {
-  const groupLabel = { mwf:'월수금', tts:'화목토', wknd:'주말' };
-  const relevantTeachers = teachers.filter(t => t.slots.some(s=>groups.includes(s.group)));
-  if (relevantTeachers.length === 0) return '';
-
-  let headers = '<th>담임</th>';
-  groups.forEach(g => {
-    headers += `<th colspan="2">${groupLabel[g]}</th><th>${groupLabel[g]} 합계</th>`;
-  });
-
-  // sub-header
-  let subHeaders = '<th></th>';
-  groups.forEach(g => {
-    subHeaders += `<th>1부</th><th>2부</th><th></th>`;
-  });
-
-  return `
-    <div class="table-card">
-      <div class="table-header">
-        <div class="table-title">${title} <span class="table-sub">클릭하여 학생 명단 확인·수정</span></div>
-      </div>
-      <div style="overflow-x:auto">
-        <table>
-          <thead>
-            <tr>${headers}</tr>
-            <tr style="background:var(--bg)">${subHeaders}</tr>
-          </thead>
-          ${renderTable(relevantTeachers, groups)}
-        </table>
+    <div class="stu-panel${isOpen?' open':''}" id="sp_${s.id}">
+      <div class="stu-label">${s.part} 학생 (${n}명)</div>
+      <div class="stu-chips" id="sc_${s.id}">${chips}</div>
+      <div class="stu-add">
+        <input id="si_${s.id}" placeholder="이름(학교학년) 입력 후 Enter"
+          onkeydown="if(event.key==='Enter')addStu('${s.id}')">
+        <button onclick="addStu('${s.id}')">추가</button>
       </div>
     </div>`;
 }
 
+function tcHTML(t, showGroups) {
+  const slots = t.slots.filter(s => showGroups.includes(s.g));
+  if (!slots.length) return '';
+  const total = slots.reduce((a,s)=>a+s.stu.length,0);
+  const maxTotal = slots.reduce((a,s)=>s.max?a+s.max:a,0);
+  return `
+    <div class="tc">
+      <div class="tc-head">
+        <div>
+          <div class="tc-name">${t.name}</div>
+          <div class="tc-days">${t.days}</div>
+        </div>
+        <div class="tc-total">
+          <div class="tc-total-num">${total}<span style="font-size:13px;color:var(--muted);font-weight:400">명</span></div>
+          <div class="tc-total-label">${maxTotal?`최대 ${maxTotal}명`:'고3·개별'}</div>
+        </div>
+      </div>
+      <div class="slots">${slots.map(s=>slotHTML(s)).join('')}</div>
+    </div>`;
+}
+
 function render() {
-  updateSyncTime();
-  updateSummary();
+  syncTime();
+  renderSummary();
 
-  const main = document.getElementById('mainContent');
-  const { teachers } = data;
+  const groups = tab==='all'?['mwf','tts','wknd']:
+                 tab==='mwf'?['mwf']:
+                 tab==='tts'?['tts']:['wknd'];
 
+  const groupLabels = {mwf:'월수금반',tts:'화목토반',wknd:'주말반'};
   let html = '';
 
-  if (currentTab === 'all' || currentTab === 'mwf') {
-    html += buildTableCard('월수금반 인원 현황', ['mwf'], teachers);
-  }
-  if (currentTab === 'all' || currentTab === 'tts') {
-    html += buildTableCard('화목토반 인원 현황', ['tts'], teachers);
-  }
-  if (currentTab === 'all' || currentTab === 'wknd') {
-    html += buildTableCard('주말반 인원 현황', ['wknd'], teachers);
-  }
-
-  html += `<div class="note-box"><p>
-    * 고1 한 타임 최대 10명, 고2 한 타임 최대 12명 기준 (고3·개별 상한 없음)<br>
-    * 이영주T 수금일 운영 (타 선생님과 요일 다름)<br>
-    * 인원 클릭 시 학생 명단 펼치기·수정 가능 / 저장 버튼으로 변경사항 저장
-  </p></div>`;
-
-  main.innerHTML = html;
-}
-
-function updateSummary() {
-  const { teachers } = data;
-  let total = 0, g1 = 0, g2 = 0, g3 = 0, addable = 0;
-  const counted = new Set();
-  teachers.forEach(t => {
-    t.slots.forEach(s => {
-      s.students.forEach(st => {
-        const key = `${t.id}_${s.id}_${st}`;
-        if (!counted.has(key)) { counted.add(key); total++; }
-      });
-      if (s.grade==='고1') g1 += s.students.length;
-      else if (s.grade==='고2') g2 += s.students.length;
-      else if (s.grade==='고3') g3 += s.students.length;
-      if (s.max) addable += Math.max(0, s.max - s.students.length);
+  if (tab === 'all') {
+    ['mwf','tts','wknd'].forEach(g => {
+      const cards = D.teachers.map(t=>tcHTML(t,[g])).filter(Boolean).join('');
+      if (cards) html += `<div class="group-label">${groupLabels[g]}</div><div class="grid">${cards}</div>`;
     });
-  });
-
-  document.getElementById('summaryStrip').innerHTML = `
-    <div class="sum-item"><div class="sum-label">전체 수강인원</div><div class="sum-val">${total}<span>명</span></div></div>
-    <div class="sum-item"><div class="sum-label">고1</div><div class="sum-val">${g1}<span>명</span></div></div>
-    <div class="sum-item"><div class="sum-label">고2</div><div class="sum-val">${g2}<span>명</span></div></div>
-    <div class="sum-item"><div class="sum-label">고3·개별</div><div class="sum-val">${g3}<span>명</span></div></div>
-    <div class="sum-item"><div class="sum-label">추가 가능 (고1·2)</div><div class="sum-val">${addable}<span>명</span></div></div>
-  `;
-}
-
-function togglePanel(slotId) {
-  if (openPanels.has(slotId)) {
-    openPanels.delete(slotId);
   } else {
-    openPanels.add(slotId);
+    const cards = D.teachers.map(t=>tcHTML(t,groups)).filter(Boolean).join('');
+    html = `<div class="grid">${cards}</div>`;
   }
-  const panel = document.getElementById(`panel_${slotId}`);
-  if (panel) panel.classList.toggle('open', openPanels.has(slotId));
+
+  document.getElementById('root').innerHTML = html;
 }
 
-function findSlot(slotId) {
-  for (const t of data.teachers) {
-    const s = t.slots.find(s=>s.id===slotId);
-    if (s) return s;
-  }
-  return null;
+function renderSummary() {
+  let total=0, g1=0, g2=0, g3=0, add=0;
+  D.teachers.forEach(t => t.slots.forEach(s => {
+    const n = s.stu.length;
+    total += n;
+    if(s.grade==='고1') g1+=n;
+    else if(s.grade==='고2') g2+=n;
+    else if(s.grade==='고3'||s.grade==='개별') g3+=n;
+    if(s.max) add += Math.max(0, s.max-n);
+  }));
+  document.getElementById('summary').innerHTML = `
+    <div class="si"><div class="si-label">전체 수강</div><div class="si-val">${total}<span>명</span></div></div>
+    <div class="si"><div class="si-label">고1</div><div class="si-val">${g1}<span>명</span></div></div>
+    <div class="si"><div class="si-label">고2</div><div class="si-val">${g2}<span>명</span></div></div>
+    <div class="si"><div class="si-label">고3·개별</div><div class="si-val">${g3}<span>명</span></div></div>
+    <div class="si"><div class="si-label">추가 가능</div><div class="si-val">${add}<span>명</span></div></div>`;
 }
 
-function removeStudent(slotId, idx) {
-  const slot = findSlot(slotId);
-  if (!slot) return;
-  const name = slot.students[idx];
-  slot.students.splice(idx, 1);
+function setTab(t, el) {
+  tab = t;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  render();
+}
+
+function toggleSlot(id) {
+  if(openSet.has(id)) openSet.delete(id);
+  else openSet.add(id);
+  const slot = document.querySelector(`.slot[onclick="toggleSlot('${id}')"]`);
+  const panel = document.getElementById(`sp_${id}`);
+  if(slot) slot.classList.toggle('open', openSet.has(id));
+  if(panel) panel.classList.toggle('open', openSet.has(id));
+}
+
+function findSlot(id) {
+  for(const t of D.teachers) { const s=t.slots.find(s=>s.id===id); if(s) return s; }
+}
+
+function delStu(slotId, idx) {
+  const s = findSlot(slotId);
+  if(!s) return;
+  s.stu.splice(idx,1);
   saveData();
+  openSet.add(slotId);
   render();
-  openPanels.add(slotId);
-  setTimeout(() => {
-    const panel = document.getElementById(`panel_${slotId}`);
-    if (panel) panel.classList.add('open');
-  }, 50);
 }
 
-function addStudent(slotId) {
-  const input = document.getElementById(`newstu_${slotId}`);
-  if (!input) return;
-  const val = input.value.trim();
-  if (!val) return;
-  const slot = findSlot(slotId);
-  if (!slot) return;
-  slot.students.push(val);
-  input.value = '';
+function addStu(slotId) {
+  const inp = document.getElementById(`si_${slotId}`);
+  if(!inp||!inp.value.trim()) return;
+  const s = findSlot(slotId);
+  if(!s) return;
+  s.stu.push(inp.value.trim());
   saveData();
+  openSet.add(slotId);
   render();
-  openPanels.add(slotId);
-  setTimeout(() => {
-    const panel = document.getElementById(`panel_${slotId}`);
-    if (panel) panel.classList.add('open');
-    const ni = document.getElementById(`newstu_${slotId}`);
-    if (ni) ni.focus();
-  }, 50);
+  setTimeout(()=>{ const i=document.getElementById(`si_${slotId}`); if(i)i.focus(); },50);
 }
 
-function switchTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
-    b.classList.toggle('active', ['all','mwf','tts','wknd'][i]===tab);
-  });
-  render();
-}
-
-function showToast(msg) {
+function toast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2500);
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2000);
 }
 
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
-
-loadData();
+load();
 </script>
 </body>
 </html>
